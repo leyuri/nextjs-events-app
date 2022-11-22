@@ -21,15 +21,14 @@ function FilteredEventsPage(props) {
     fetch("https://nextjs-course-f5341-default-rtdb.firebaseio.com/events.json")
       .then((response) => response.json())
       .then((data) => {
-        const transformedSales = [];
+        const transformedEvents = [];
         for (const key in data) {
-          transformedSales.push({
+          transformedEvents.push({
             id: key,
-            username: data[key].username,
-            volume: data[key].volume,
+            ...data[key],
           });
         }
-        console.log("transformedSales", transformedSales);
+        setLoadedEvents(transformedEvents);
       });
   }, []);
   if (!loadedEvents) {
@@ -48,8 +47,7 @@ function FilteredEventsPage(props) {
     numYear > 2030 ||
     numYear < 2021 ||
     numMonth < 1 ||
-    numMonth > 12 ||
-    error
+    numMonth > 12
   ) {
     return (
       <Fragment>
